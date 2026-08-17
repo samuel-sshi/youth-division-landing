@@ -23,7 +23,10 @@ HERMES_HOME = get_hermes_home()
 TOKEN_PATH = HERMES_HOME / "google_token.json"
 CLIENT_SECRET_PATH = HERMES_HOME / "google_client_secret.json"
 
-SHEET_ID = "REDACTED"
+# Sheet ID is intentionally NOT stored in this public repo.
+# The live pipeline reads it from ~/.hermes/oneighty_sheet_id (private),
+# created once with:  echo "<SHEET_ID>" > ~/.hermes/oneighty_sheet_id
+SHEET_ID = (HERMES_HOME / "oneighty_sheet_id").read_text(encoding="utf-8").strip()
 
 HEADERS = ["Date", "Name", "Time", "Location", "Description", "Link", "Published"]
 

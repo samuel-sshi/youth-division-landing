@@ -15,7 +15,8 @@ the sheet automatically — the media team never touches GitHub or JSON.
 
 ### The spreadsheet
 
-**[ONEIGHTY Events (Website)](https://docs.google.com/spreadsheets/d/REDACTED/edit)**
+**ONEIGHTY Events (Website)** — link is shared privately with the media team
+(it is intentionally not published in this public repo).
 
 Columns (row 1 is the header — **do not edit row 1**):
 
@@ -98,7 +99,10 @@ hermes cron list
 
 - Google OAuth token at `~/.hermes/google_token.json` (scopes include
   `spreadsheets`). Managed by the `google-workspace` skill.
-- `gh` CLI authenticated as `samuel-sshi` (for the git push).
+- Sheet ID stored at `~/.hermes/oneighty_sheet_id` (not in this public repo).
+- The live copies of `sync_events.py` / `setup_events_sheet.py` live in
+  `~/.hermes/scripts/` (private) — the copies in this repo are documentation
+  only and are NOT executed by the pipeline.
 - The cron job runs `no_agent=true`, so it needs no model call — pure script.
 
 ### Adding a new field to events
