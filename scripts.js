@@ -49,8 +49,14 @@ document.addEventListener('keydown', (e) => {
   const grid = document.getElementById('event-grid');
   const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // All date math is done on plain YYYY-MM-DD strings in WIB (Asia/Jakarta)
+  // so events never disappear a day early for visitors in other timezones.
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jakarta', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date()); // en-CA yields YYYY-MM-DD
+
+  // A valid date string must be exactly YYYY-MM-DD with a real month/day range.
+  const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
 
   fetch('events.json?v=3', { cache: 'no-store' })
     .then(res => {
@@ -62,10 +68,13 @@ document.addEventListener('keydown', (e) => {
 
       events = events
         .filter(ev => {
-          const d = new Date(ev.date + 'T00:00:00');
-          return !isNaN(d) && d >= today;
+          const m = ISO_DATE.exec(ev.date);
+          if (!m) return false;
+          const [, y, mo, da] = m;
+          // Lexicographic YYYY-MM-DD comparison is timezone-proof.
+          return `${y}-${mo}-${da}` >= today;
         })
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .sort((a, b) => a.date.localeCompare(b.date));
 
       if (events.length === 0) {
         grid.innerHTML = `
@@ -76,9 +85,10 @@ document.addEventListener('keydown', (e) => {
       }
 
       grid.innerHTML = events.map((ev) => {
-        const d = new Date(ev.date + 'T00:00:00');
-        const month = months[d.getMonth()];
-        const dayNum = d.getDate();
+        // ev.date is validated YYYY-MM-DD by the filter above.
+        const [, y, mo, da] = ISO_DATE.exec(ev.date);
+        const month = months[parseInt(mo, 10) - 1];
+        const dayNum = parseInt(da, 10);
 
         let pills = '';
         if (ev.time) {
