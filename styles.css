@@ -580,6 +580,8 @@ nav.scrolled {
 }
 
 .read-more {
+  display: block;
+  width: fit-content;
   background: none;
   border: none;
   color: var(--accent-2);
@@ -587,7 +589,7 @@ nav.scrolled {
   font-weight: 600;
   cursor: pointer;
   padding: 0;
-  margin-bottom: 24px;
+  margin: 0 0 22px 0;
   transition: color 0.2s;
 }
 

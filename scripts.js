@@ -19,7 +19,6 @@ menuToggle.addEventListener('click', () => {
   const grid = document.getElementById('event-grid');
   const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 
-  // Today at 00:00 local time — events on or after today are "upcoming"
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
@@ -31,7 +30,6 @@ menuToggle.addEventListener('click', () => {
     .then(data => {
       let events = data.events || [];
 
-      // Keep only future events, then sort ascending by date
       events = events
         .filter(ev => {
           const d = new Date(ev.date + 'T00:00:00');
@@ -52,7 +50,6 @@ menuToggle.addEventListener('click', () => {
         const month = months[d.getMonth()];
         const dayNum = d.getDate();
 
-        // Build meta pills
         let pills = '';
         if (ev.time) {
           pills += `<span class="meta-pill"><span>🕒</span> ${escapeHtml(ev.time)}</span>`;
@@ -61,20 +58,15 @@ menuToggle.addEventListener('click', () => {
           pills += `<span class="meta-pill muted"><span>📍</span> ${escapeHtml(ev.location)}</span>`;
         }
 
-        // Button link
         const link = ev.link
           ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener" class="upcoming-link">See details →</a>`
           : '';
 
-        // Render description + read more if needed
-        let descHtml = '';
-        if (ev.description) {
-          const long = ev.description.length > 120;
-          descHtml = `
-            <p class="desc ${long ? '' : 'desc-short'}">${escapeHtml(ev.description)}</p>
-            ${long ? '<button class="read-more" type="button">Read more</button>' : ''}
-          `;
-        }
+        const hasLongDesc = ev.description && ev.description.length > 120;
+        const descClass = hasLongDesc ? 'desc' : 'desc desc-short';
+        const readMoreBtn = hasLongDesc
+          ? '<button class="read-more" type="button" aria-expanded="false">Read more</button>'
+          : '';
 
         return `
           <div class="upcoming-card">
@@ -83,7 +75,8 @@ menuToggle.addEventListener('click', () => {
               <span class="month">${month}</span>
             </div>
             <h3>${escapeHtml(ev.name)}</h3>
-            ${descHtml}
+            ${ev.description ? `<p class="${descClass}">${escapeHtml(ev.description)}</p>` : ''}
+            ${readMoreBtn}
             <div class="upcoming-meta">${pills}</div>
             <div class="upcoming-actions">
               ${link}
@@ -91,15 +84,23 @@ menuToggle.addEventListener('click', () => {
           </div>`;
       }).join('');
 
-      // Wire up read more buttons — scope to each card
+      // Wire up each read-more button strictly within its own card
       document.querySelectorAll('.upcoming-card').forEach(card => {
         const desc = card.querySelector('.desc');
         const btn = card.querySelector('.read-more');
         if (!desc || !btn) return;
 
         btn.addEventListener('click', () => {
-          const isExpanded = desc.classList.toggle('expanded');
-          btn.textContent = isExpanded ? 'Show less' : 'Read more';
+          const expanded = desc.classList.contains('expanded');
+          if (expanded) {
+            desc.classList.remove('expanded');
+            btn.textContent = 'Read more';
+            btn.setAttribute('aria-expanded', 'false');
+          } else {
+            desc.classList.add('expanded');
+            btn.textContent = 'Show less';
+            btn.setAttribute('aria-expanded', 'true');
+          }
         });
       });
     })
