@@ -792,6 +792,10 @@ footer {
   backdrop-filter: blur(8px);
 }
 
+.mobile-menu.active .mobile-menu-panel {
+  transform: translateX(0);
+}
+
 .mobile-menu-panel {
   position: absolute;
   top: 0;
