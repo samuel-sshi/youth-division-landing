@@ -48,7 +48,7 @@ MONTH_MAP = {
     "nov": 11, "november": 11, "dec": 12, "desember": 12,
 }
 
-TIME_RE = re.compile(r"^(\d{1,2})[:.](\d{2})")
+TIME_RE = re.compile(r"^(\d{1,2})[:.](\d{2})\s*(?:wib|ist)?$", re.IGNORECASE)
 
 
 def fail(msg):
