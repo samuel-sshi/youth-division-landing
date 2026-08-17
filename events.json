@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "name": "Youth Hangout Night",
+      "date": "2026-08-22",
+      "time": "18.30",
+      "location": "WTC LT.3 — Next Gen",
+      "description": "Game night + snacks + a chance to meet new people. Bring a friend.",
+      "link": "https://www.instagram.com/oneightywtc/"
+    },
+    {
+      "name": "ONEIGHTY Combined Service",
+      "date": "2026-08-23",
+      "time": "10.00",
+      "location": "WTC LT.3",
+      "description": "All grades together for one big service — worship, word, and small groups.",
+      "link": "https://www.instagram.com/oneightywtc/"
+    },
+    {
+      "name": "Back to School Celebration",
+      "date": "2026-09-06",
+      "time": "13.30",
+      "location": "WTC LT.3 — Next Gen",
+      "description": "Kick off the new school year with us. Special guest, giveaways, and more.",
+      "link": "https://www.instagram.com/oneightywtc/"
+    }
+  ]
+}

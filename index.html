@@ -457,6 +457,110 @@
       white-space: nowrap;
     }
 
+    /* Upcoming Events */
+    .upcoming {
+      background: var(--void);
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .upcoming-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .upcoming-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    }
+
+    .upcoming-date {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .upcoming-date .month {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-2);
+    }
+
+    .upcoming-date .day-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .upcoming-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .upcoming-card .desc {
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .upcoming-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .upcoming-meta span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .upcoming-link {
+      align-self: flex-start;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--accent-2);
+      transition: color 0.2s;
+    }
+
+    .upcoming-link:hover {
+      color: var(--white);
+    }
+
+    .upcoming-empty {
+      text-align: center;
+      padding: 48px 24px;
+      background: var(--surface);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+    }
+
+    .upcoming-empty p {
+      margin: 0;
+    }
+
+
     /* CTA Section */
     .cta {
       text-align: center;
@@ -693,6 +797,7 @@
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#schedule">Schedule</a>
+        <a href="#events">Events</a>
         <a href="#connect">Connect</a>
         <a href="https://www.instagram.com/oneightywtc/" target="_blank" rel="noopener" class="btn btn-primary" style="padding: 10px 22px; font-size: 0.9rem;">Follow Us</a>
       </div>
@@ -813,6 +918,23 @@
     </div>
   </section>
 
+  <!-- Upcoming Events -->
+  <section id="events" class="upcoming">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">
+          <span>✦</span>
+          Upcoming events
+        </div>
+        <h2>What's coming up.</h2>
+        <p>New events are added all the time — check back or follow us on Instagram to stay in the loop.</p>
+      </div>
+      <div class="event-grid" id="event-grid">
+        <!-- Events are rendered from events.json -->
+      </div>
+    </div>
+  </section>
+
   <!-- Instagram / Connect -->
   <section id="connect" class="social">
     <div class="container">
@@ -895,6 +1017,81 @@
     menuToggle.addEventListener('click', () => {
       alert('Mobile menu placeholder — add menu overlay here.');
     });
+
+    // ---- Upcoming Events (data-driven from events.json) ----
+    (async function renderEvents() {
+      const grid = document.getElementById('event-grid');
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+      // Today at 00:00 local time — events on or after today are "upcoming"
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      try {
+        const res = await fetch('events.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        let events = data.events || [];
+
+        // Keep only future events, then sort ascending by date
+        events = events
+          .filter(ev => {
+            const d = new Date(ev.date + 'T00:00:00');
+            return !isNaN(d) && d >= today;
+          })
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        if (events.length === 0) {
+          grid.innerHTML = `
+            <div class="upcoming-empty" style="grid-column: 1 / -1;">
+              <p>No upcoming events yet — check back soon or follow <a href="https://www.instagram.com/oneightywtc/" target="_blank" rel="noopener" style="color: var(--accent-2);">@oneightywtc</a>.</p>
+            </div>`;
+          return;
+        }
+
+        grid.innerHTML = events.map(ev => {
+          const d = new Date(ev.date + 'T00:00:00');
+          const month = months[d.getMonth()];
+          const dayNum = d.getDate();
+
+          // Build meta rows (time + location) only when present
+          let meta = '';
+          if (ev.time) meta += `<span>🕒 ${escapeHtml(ev.time)}</span>`;
+          if (ev.location) meta += `<span>📍 ${escapeHtml(ev.location)}</span>`;
+
+          const link = ev.link
+            ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener" class="upcoming-link">Learn more →</a>`
+            : '';
+
+          return `
+            <div class="upcoming-card">
+              <div class="upcoming-date">
+                <span class="day-num">${dayNum}</span>
+                <span class="month">${month}</span>
+              </div>
+              <h3>${escapeHtml(ev.name)}</h3>
+              ${ev.description ? `<p class="desc">${escapeHtml(ev.description)}</p>` : ''}
+              ${meta ? `<div class="upcoming-meta">${meta}</div>` : ''}
+              ${link}
+            </div>`;
+        }).join('');
+      } catch (err) {
+        grid.innerHTML = `
+          <div class="upcoming-empty" style="grid-column: 1 / -1;">
+            <p>Couldn't load events right now. Follow <a href="https://www.instagram.com/oneightywtc/" target="_blank" rel="noopener" style="color: var(--accent-2);">@oneightywtc</a> for the latest.</p>
+          </div>`;
+        console.error('Failed to load events.json:', err);
+      }
+    })();
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
   </script>
 </body>
 </html>
