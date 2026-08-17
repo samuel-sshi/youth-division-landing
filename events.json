@@ -23,13 +23,6 @@
       "location": "WTC LT.3 — Next Gen",
       "description": "Kick off the new school year with us. Special guest, giveaways, and more.",
       "link": "https://www.instagram.com/oneightywtc/"
-    },
-    {
-      "name": "TEST End-to-End Check",
-      "date": "2026-09-20",
-      "time": "17",
-      "location": "WTC",
-      "description": "Verify the sync pipeline"
     }
   ]
 }
