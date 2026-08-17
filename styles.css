@@ -817,17 +817,13 @@ footer {
 .mobile-menu-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 40px;
+  padding-top: 4px;
 }
 
 .mobile-menu-header .logo {
-  font-size: 1.2rem;
-}
-
-.mobile-menu-header .logo .logo-dot {
-  width: 8px;
-  height: 8px;
+  display: none;
 }
 
 .mobile-menu-close {
