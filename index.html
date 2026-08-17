@@ -27,9 +27,32 @@
         <a href="#connect">Connect</a>
         <a href="https://www.instagram.com/oneightywtc/" target="_blank" rel="noopener" class="btn btn-primary" style="padding: 10px 22px; font-size: 0.9rem;">Follow Us</a>
       </div>
-      <button class="menu-toggle" aria-label="Menu">☰</button>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">☰</button>
     </div>
   </nav>
+
+  <!-- Mobile menu overlay -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+      <div class="mobile-menu-header">
+        <a href="#" class="logo" aria-label="ONEIGHTY home">
+          <span class="logo-dot"></span>
+          ONEIGHTY
+        </a>
+        <button class="mobile-menu-close" aria-label="Close menu">×</button>
+      </div>
+      <nav class="mobile-menu-links">
+        <a href="#about">About</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#events">Events</a>
+        <a href="#connect">Connect</a>
+      </nav>
+      <div class="mobile-menu-footer">
+        <a href="https://www.instagram.com/oneightywtc/" target="_blank" rel="noopener" class="btn btn-primary" style="width: 100%;">Follow @oneightywtc</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Hero -->
   <section class="hero">

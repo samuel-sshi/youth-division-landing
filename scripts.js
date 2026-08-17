@@ -8,10 +8,40 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Simple mobile menu toggle (basic placeholder)
-const menuToggle = document.querySelector('.menu-toggle');
-menuToggle.addEventListener('click', () => {
-  alert('Mobile menu placeholder — add menu overlay here.');
+// Simple mobile menu toggle
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenuClose = document.querySelector('.mobile-menu-close');
+const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
+
+function openMenu() {
+  mobileMenu.classList.add('active');
+  mobileMenu.setAttribute('aria-hidden', 'false');
+  menuToggle.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('menu-open');
+}
+
+function closeMenu() {
+  mobileMenu.classList.remove('active');
+  mobileMenu.setAttribute('aria-hidden', 'true');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+}
+
+menuToggle.addEventListener('click', openMenu);
+mobileMenuClose.addEventListener('click', closeMenu);
+
+mobileMenuLinks.forEach(link => {
+  link.addEventListener('click', closeMenu);
+});
+
+// Close menu when clicking the backdrop
+mobileMenu.querySelector('.mobile-menu-backdrop').addEventListener('click', closeMenu);
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+    closeMenu();
+  }
 });
 
 // ---- Upcoming Events (data-driven from events.json) ----
