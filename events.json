@@ -1,6 +1,14 @@
 {
   "events": [
     {
+      "name": "Bible Study",
+      "date": "2026-08-28",
+      "time": "19.00",
+      "location": "WTC LT. 2",
+      "description": "Shalom Guys! \n\nApa kalian pernah penasaran atau bingung tentang apa yang kalian baca di alkitab? Pas banget nih, karena kita akan adain Bible Study Kembali teman-teman!!\n\nyuk kita sempetin waktu buat belajar firman Tuhan bareng-bareng!\n\n🗓️ Hari/Tanggal: Jumat, 28 Agustus 2026\n⏰ Waktu: 19:00 WIB\n📍 Lokasi: TC Lt. 2\n\nDan boleh banget nih buat kalian drop topik, pertanyaan, atau hal-hal lain yang lagi bikin kamu penasaran/bergumul belakangan ini di form ya!",
+      "link": "https://bit.ly/BibleStudyNextGen"
+    },
+    {
       "name": "Boys and Girls Night",
       "date": "2026-09-04",
       "time": "18.30",
