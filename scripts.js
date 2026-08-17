@@ -9,6 +9,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Simple mobile menu toggle
+const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
 const mobileMenuClose = document.querySelector('.mobile-menu-close');
 const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
@@ -52,7 +53,7 @@ document.addEventListener('keydown', (e) => {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  fetch('events.json', { cache: 'no-store' })
+  fetch('events.json?v=3', { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
