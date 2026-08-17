@@ -821,6 +821,15 @@ footer {
   margin-bottom: 40px;
 }
 
+.mobile-menu-header .logo {
+  font-size: 1.2rem;
+}
+
+.mobile-menu-header .logo .logo-dot {
+  width: 8px;
+  height: 8px;
+}
+
 .mobile-menu-close {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
