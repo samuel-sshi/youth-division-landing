@@ -800,8 +800,8 @@ footer {
   height: 100%;
   background: var(--surface);
   border-left: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 32px 24px;
-  padding-top: max(40px, env(safe-area-inset-top));
+  padding: 48px 32px;
+  padding-top: max(48px, env(safe-area-inset-top));
   padding-bottom: max(32px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
@@ -810,40 +810,12 @@ footer {
   box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
 }
 
-.mobile-menu.active .mobile-menu-panel {
-  transform: translateX(0);
-}
-
 .mobile-menu-header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 40px;
-  padding-top: 4px;
-}
-
-.mobile-menu-header .logo {
   display: none;
 }
 
 .mobile-menu-close {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--white);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 1.4rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-}
-
-.mobile-menu-close:hover {
-  background: rgba(255, 255, 255, 0.12);
+  display: none;
 }
 
 .mobile-menu-links {
@@ -857,7 +829,8 @@ footer {
 .mobile-menu-links a {
   font-size: 1.25rem;
   font-weight: 600;
-  padding: 14px 0;
+  padding: 16px 0;
+  padding-left: 8px;
   color: var(--white);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: color 0.2s, padding-left 0.2s;
@@ -865,7 +838,7 @@ footer {
 
 .mobile-menu-links a:hover {
   color: var(--accent-2);
-  padding-left: 8px;
+  padding-left: 16px;
 }
 
 .mobile-menu-footer {

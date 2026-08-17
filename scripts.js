@@ -29,7 +29,6 @@ function closeMenu() {
 }
 
 menuToggle.addEventListener('click', openMenu);
-mobileMenuClose.addEventListener('click', closeMenu);
 
 mobileMenuLinks.forEach(link => {
   link.addEventListener('click', closeMenu);
