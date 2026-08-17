@@ -587,11 +587,16 @@ nav.scrolled {
   font-weight: 600;
   cursor: pointer;
   padding: 0;
+  margin-bottom: 24px;
   transition: color 0.2s;
 }
 
 .read-more:hover {
   color: var(--white);
+}
+
+.upcoming-card:has(.read-more) .upcoming-meta {
+  margin-top: 0;
 }
 
 .upcoming-empty {

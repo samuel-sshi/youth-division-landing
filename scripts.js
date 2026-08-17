@@ -47,11 +47,10 @@ menuToggle.addEventListener('click', () => {
         return;
       }
 
-      grid.innerHTML = events.map((ev, index) => {
+      grid.innerHTML = events.map((ev) => {
         const d = new Date(ev.date + 'T00:00:00');
         const month = months[d.getMonth()];
         const dayNum = d.getDate();
-        const idBase = `event-${index}`;
 
         // Build meta pills
         let pills = '';
@@ -67,10 +66,15 @@ menuToggle.addEventListener('click', () => {
           ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener" class="upcoming-link">See details →</a>`
           : '';
 
-        // Read more if description is long
-        const readMore = ev.description && ev.description.length > 120
-          ? `<button class="read-more" data-target="${idBase}-desc">Read more</button>`
-          : '';
+        // Render description + read more if needed
+        let descHtml = '';
+        if (ev.description) {
+          const long = ev.description.length > 120;
+          descHtml = `
+            <p class="desc ${long ? '' : 'desc-short'}">${escapeHtml(ev.description)}</p>
+            ${long ? '<button class="read-more" type="button">Read more</button>' : ''}
+          `;
+        }
 
         return `
           <div class="upcoming-card">
@@ -79,8 +83,7 @@ menuToggle.addEventListener('click', () => {
               <span class="month">${month}</span>
             </div>
             <h3>${escapeHtml(ev.name)}</h3>
-            ${ev.description ? `<p id="${idBase}-desc" class="desc">${escapeHtml(ev.description)}</p>` : ''}
-            ${readMore}
+            ${descHtml}
             <div class="upcoming-meta">${pills}</div>
             <div class="upcoming-actions">
               ${link}
@@ -88,14 +91,15 @@ menuToggle.addEventListener('click', () => {
           </div>`;
       }).join('');
 
-      // Wire up read more buttons
-      document.querySelectorAll('.read-more').forEach(btn => {
+      // Wire up read more buttons — scope to each card
+      document.querySelectorAll('.upcoming-card').forEach(card => {
+        const desc = card.querySelector('.desc');
+        const btn = card.querySelector('.read-more');
+        if (!desc || !btn) return;
+
         btn.addEventListener('click', () => {
-          const target = document.getElementById(btn.dataset.target);
-          if (target) {
-            target.classList.toggle('expanded');
-            btn.textContent = target.classList.contains('expanded') ? 'Show less' : 'Read more';
-          }
+          const isExpanded = desc.classList.toggle('expanded');
+          btn.textContent = isExpanded ? 'Show less' : 'Read more';
         });
       });
     })
