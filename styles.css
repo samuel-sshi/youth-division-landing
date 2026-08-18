@@ -762,6 +762,123 @@ nav.scrolled {
   color: var(--white);
 }
 
+/* Experience */
+.experience {
+  background: var(--void);
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.experience-card {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.experience-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.experience-card h3 {
+  margin-bottom: 8px;
+}
+
+.experience-card p {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Testimonies */
+.testimonies {
+  background: var(--ink);
+}
+
+.testimony-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimony-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.testimony-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.testimony-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimony-play {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient);
+  color: var(--void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  padding-left: 4px;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.testimony-card:hover .testimony-play {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.25);
+}
+
+.testimony-info {
+  padding: 24px;
+}
+
+.testimony-info h3 {
+  margin-bottom: 6px;
+}
+
+.testimony-info p {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
 /* Instagram card */
 .ig-card {
   background: var(--surface);
@@ -1035,6 +1152,14 @@ body.menu-open {
   }
 
   .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimony-grid {
     grid-template-columns: 1fr;
   }
 
