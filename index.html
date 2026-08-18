@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ONEIGHTY — WTC Youth</title>
   <meta name="description" content="ONEIGHTY is the youth community of World Transformation Church. Student community for 7th–12th grade. Sunday services & Tower of Prayer.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data: https://i.ytimg.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=2">
 </head>
@@ -219,34 +219,50 @@
         <h2>Real stories. Real change.</h2>
         <p style="margin: 0 auto;">Watch how God is moving in the lives of students just like you.</p>
       </div>
-      <div class="testimony-grid">
-        <a href="https://youtu.be/F5kke7s1I0M?si=sXbaKMfkAc9ArQvS" target="_blank" rel="noopener" class="testimony-card">
-          <div class="testimony-thumb">
-            <span class="testimony-play">▶</span>
+      <div class="testimony-slider" id="testimony-slider">
+        <button class="slider-btn slider-btn--prev" type="button" aria-label="Previous testimony">‹</button>
+        <div class="testimony-viewport">
+          <div class="testimony-track" id="testimony-track">
+            <div class="testimony-slide">
+              <div class="testimony-player" data-video-id="F5kke7s1I0M" data-title="Share To Care | TIMMY">
+                <img class="testimony-thumb-img" src="https://i.ytimg.com/vi/F5kke7s1I0M/hqdefault.jpg" alt="Share To Care | TIMMY" loading="lazy">
+                <button class="testimony-play" type="button" aria-label="Play video">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+              </div>
+              <div class="testimony-info">
+                <h3>Share To Care</h3>
+                <p>TIMMY</p>
+              </div>
+            </div>
+            <div class="testimony-slide">
+              <div class="testimony-player" data-video-id="yvUNahLsoDg" data-title="Share To Care | Kezia">
+                <img class="testimony-thumb-img" src="https://i.ytimg.com/vi/yvUNahLsoDg/hqdefault.jpg" alt="Share To Care | Kezia" loading="lazy">
+                <button class="testimony-play" type="button" aria-label="Play video">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+              </div>
+              <div class="testimony-info">
+                <h3>Share To Care</h3>
+                <p>Kezia</p>
+              </div>
+            </div>
+            <div class="testimony-slide">
+              <div class="testimony-player" data-video-id="dHB_7sAaxlc" data-title="Share To Care | Jillian">
+                <img class="testimony-thumb-img" src="https://i.ytimg.com/vi/dHB_7sAaxlc/hqdefault.jpg" alt="Share To Care | Jillian" loading="lazy">
+                <button class="testimony-play" type="button" aria-label="Play video">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+              </div>
+              <div class="testimony-info">
+                <h3>Share To Care</h3>
+                <p>Jillian</p>
+              </div>
+            </div>
           </div>
-          <div class="testimony-info">
-            <h3>Testimony #1</h3>
-            <p>A student shares their 180 story.</p>
-          </div>
-        </a>
-        <a href="https://youtu.be/yvUNahLsoDg?si=DPlktyT7yhwlfPdX" target="_blank" rel="noopener" class="testimony-card">
-          <div class="testimony-thumb">
-            <span class="testimony-play">▶</span>
-          </div>
-          <div class="testimony-info">
-            <h3>Testimony #2</h3>
-            <p>How one encounter changed everything.</p>
-          </div>
-        </a>
-        <a href="https://youtu.be/dHB_7sAaxlc?si=WRVUf_Ij1H-wLOZn" target="_blank" rel="noopener" class="testimony-card">
-          <div class="testimony-thumb">
-            <span class="testimony-play">▶</span>
-          </div>
-          <div class="testimony-info">
-            <h3>Testimony #3</h3>
-            <p>Finding identity and purpose.</p>
-          </div>
-        </a>
+        </div>
+        <button class="slider-btn slider-btn--next" type="button" aria-label="Next testimony">›</button>
+        <div class="testimony-dots" id="testimony-dots" aria-hidden="true"></div>
       </div>
     </div>
   </section>
@@ -388,6 +404,6 @@
     </div>
   </footer>
 
-  <script src="scripts.js?v=3"></script>
+  <script src="scripts.js?v=4"></script>
 </body>
 </html>

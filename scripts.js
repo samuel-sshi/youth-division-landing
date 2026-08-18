@@ -161,3 +161,61 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+// ---- Testimonies slider (in-site YouTube playback) ----
+(function initTestimonies() {
+  const slider = document.getElementById('testimony-slider');
+  if (!slider) return;
+
+  const track = document.getElementById('testimony-track');
+  const dotsWrap = document.getElementById('testimony-dots');
+  const prevBtn = slider.querySelector('.slider-btn--prev');
+  const nextBtn = slider.querySelector('.slider-btn--next');
+  const slides = Array.from(slider.querySelectorAll('.testimony-slide'));
+
+  let index = 0;
+
+  // Build navigation dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'testimony-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to testimony ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function render() {
+    track.style.transform = 'translateX(' + (-index * 100) + '%)';
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    render();
+  }
+
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  // Swap a thumbnail + play button for an autoplaying embedded player.
+  slides.forEach(slide => {
+    const player = slide.querySelector('.testimony-player');
+    const playBtn = slide.querySelector('.testimony-play');
+    if (!player || !playBtn) return;
+
+    playBtn.addEventListener('click', () => {
+      const videoId = player.getAttribute('data-video-id');
+      const title = player.getAttribute('data-title') || 'YouTube video';
+      player.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + videoId +
+        '?autoplay=1&rel=0&playsinline=1" title="' + title +
+        '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    });
+  });
+
+  render();
+})();
