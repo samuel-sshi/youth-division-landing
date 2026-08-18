@@ -872,6 +872,15 @@ body.menu-open {
     gap: 16px;
   }
 
+  /* Mobile: show Saturday (Tower of Prayer) before Sunday (Youth Service) */
+  .event-item--sat {
+    order: 1;
+  }
+
+  .event-item--sun {
+    order: 2;
+  }
+
   .nav-links {
     display: none;
   }
