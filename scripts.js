@@ -235,8 +235,14 @@ function escapeHtml(str) {
     if (!player || !playBtn) return;
 
     playBtn.addEventListener('click', () => {
-      const videoId = player.getAttribute('data-video-id');
+      const videoId = player.getAttribute('data-video-id') || '';
       const title = player.getAttribute('data-title') || 'YouTube video';
+      // Whitelist: YouTube IDs are exactly 11 chars [A-Za-z0-9_-]. Anything else
+      // is treated as tampered markup and ignored rather than injected into src.
+      if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) {
+        console.error('Refusing to embed invalid video id:', videoId);
+        return;
+      }
       player.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + videoId +
         '?autoplay=1&rel=0&playsinline=1" title="' + title +
         '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
