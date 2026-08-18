@@ -202,6 +202,32 @@ function escapeHtml(str) {
   prevBtn.addEventListener('click', prev);
   nextBtn.addEventListener('click', next);
 
+  // Touch swipe support for mobile
+  let startX = null;
+  let startY = null;
+  const viewport = slider.querySelector('.testimony-viewport');
+
+  viewport.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', (e) => {
+    if (startX === null || startY === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const dx = endX - startX;
+    const dy = endY - startY;
+    startX = startY = null;
+    // Only treat as a swipe if horizontal movement dominates
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0) next();
+      else prev();
+    }
+  }, { passive: true });
+
   // Swap a thumbnail + play button for an autoplaying embedded player.
   slides.forEach(slide => {
     const player = slide.querySelector('.testimony-player');
