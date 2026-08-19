@@ -251,3 +251,71 @@ function escapeHtml(str) {
 
   render();
 })();
+
+// ---- 180 Experience photo slider ----
+(function initExperience() {
+  const slider = document.getElementById('experience-slider');
+  if (!slider) return;
+
+  const track = document.getElementById('experience-track');
+  const dotsWrap = document.getElementById('experience-dots');
+  const prevBtn = slider.querySelector('.slider-btn--prev');
+  const nextBtn = slider.querySelector('.slider-btn--next');
+  const slides = Array.from(slider.querySelectorAll('.experience-slide'));
+
+  let index = 0;
+
+  // Build navigation dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'experience-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function render() {
+    track.style.transform = 'translateX(' + (-index * 100) + '%)';
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    render();
+  }
+
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  // Touch swipe support for mobile
+  let startX = null;
+  let startY = null;
+  const viewport = slider.querySelector('.experience-viewport');
+
+  viewport.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', (e) => {
+    if (startX === null || startY === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const dx = endX - startX;
+    const dy = endY - startY;
+    startX = startY = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0) next();
+      else prev();
+    }
+  }, { passive: true });
+
+  render();
+})();

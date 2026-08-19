@@ -7,7 +7,7 @@
   <meta name="description" content="ONEIGHTY is the youth community of World Transformation Church. Student community for 7th–12th grade. Sunday services & Tower of Prayer.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data:; frame-src https://www.youtube-nocookie.com https://www.youtube.com; base-uri 'none'; form-action 'none'">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <!-- Navigation -->
@@ -146,22 +146,23 @@
         <h2>Made for Gen Z & Gen Alpha.</h2>
         <p>Real moments, real community, and real encounters with God. Come be part of the 180 Experience — where students find purpose, friendship, and a place to belong.</p>
       </div>
-      <div class="experience-grid">
-        <div class="experience-card">
-          <div class="experience-placeholder">🎉</div>
-          <h3>Hangouts</h3>
-          <p>Fun events and chill moments built for genuine connection.</p>
+      <div class="experience-slider" id="experience-slider">
+        <div class="experience-stage">
+          <button class="slider-btn slider-btn--prev" type="button" aria-label="Previous photo">‹</button>
+          <div class="experience-viewport">
+            <div class="experience-track" id="experience-track">
+              <div class="experience-slide"><img src="experience-1.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" decoding="async"></div>
+              <div class="experience-slide"><img src="experience-2.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" loading="lazy" decoding="async"></div>
+              <div class="experience-slide"><img src="experience-3.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" loading="lazy" decoding="async"></div>
+              <div class="experience-slide"><img src="experience-4.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" loading="lazy" decoding="async"></div>
+              <div class="experience-slide"><img src="experience-5.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" loading="lazy" decoding="async"></div>
+              <div class="experience-slide"><img src="experience-6.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" loading="lazy" decoding="async"></div>
+              <div class="experience-slide"><img src="experience-7.jpg" alt="ONEIGHTY 180 Experience" width="1600" height="900" loading="lazy" decoding="async"></div>
+            </div>
+          </div>
+          <button class="slider-btn slider-btn--next" type="button" aria-label="Next photo">›</button>
         </div>
-        <div class="experience-card">
-          <div class="experience-placeholder">🎧</div>
-          <h3>Worship</h3>
-          <p>Energy-filled nights where students encounter God together.</p>
-        </div>
-        <div class="experience-card">
-          <div class="experience-placeholder">🤝</div>
-          <h3>Small Groups</h3>
-          <p>Real conversations and friendships that go beyond Sunday.</p>
-        </div>
+        <div class="experience-dots" id="experience-dots"></div>
       </div>
     </div>
   </section>
@@ -419,6 +420,6 @@
     </div>
   </footer>
 
-  <script src="scripts.js?v=6"></script>
+  <script src="scripts.js?v=7"></script>
 </body>
 </html>
