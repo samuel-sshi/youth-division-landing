@@ -274,6 +274,22 @@ nav.scrolled {
   animation-delay: -3s;
 }
 
+.floating-card.events {
+  bottom: 0;
+  right: 0;
+  animation-delay: -2s;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.floating-card.events:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: var(--elevated);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+}
+
 .floating-card h3 {
   font-size: 1.5rem;
   margin-bottom: 8px;
@@ -1193,7 +1209,8 @@ body.menu-open {
   }
 
   .floating-card.top,
-  .floating-card.bottom {
+  .floating-card.bottom,
+  .floating-card.events {
     display: none;
   }
 
