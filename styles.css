@@ -342,7 +342,7 @@ nav.scrolled {
 /* Cards */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 
@@ -370,6 +370,16 @@ nav.scrolled {
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 24px;
+}
+
+.card-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 10px;
 }
 
 .card h3 {
@@ -1215,7 +1225,7 @@ body.menu-open {
   }
 
   .card-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .event-item {
@@ -1261,6 +1271,10 @@ body.menu-open {
   }
 
   .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid {
     grid-template-columns: 1fr;
   }
 
