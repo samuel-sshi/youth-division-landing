@@ -191,6 +191,21 @@ nav.scrolled {
   align-items: center;
   padding-top: 120px;
   position: relative;
+  background: var(--void) url('hero-bg.jpg') center/cover no-repeat;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.82) 50%, rgba(0, 0, 0, 0.94) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-grid {
@@ -233,6 +248,42 @@ nav.scrolled {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.hero-song {
+  margin-top: 28px;
+}
+
+.hero-song-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-song-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.hero-song-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.hero-song-name {
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .hero-visual {
