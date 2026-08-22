@@ -160,9 +160,7 @@ def normalize_link(raw):
     Control/whitespace chars are stripped first — browsers ignore them inside
     a URL scheme, so 'java\\tscript:alert(1)' must not smuggle a scheme past.
     """
-    s = str(raw)
-    if re.search(r"[\x00-\x1f\x7f]", s):
-        s = re.sub(r"[\x00-\x1f\x7f]", "", s)
+    s = re.sub(r"[\x00-\x1f\x7f]", "", str(raw))
     s = s.strip()
     if not s:
         return ""
