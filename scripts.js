@@ -98,8 +98,9 @@ document.addEventListener('keydown', (e) => {
           pills += `<span class="meta-pill muted"><span>📍</span> ${escapeHtml(ev.location)}</span>`;
         }
 
-        const link = ev.link
-          ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener" class="upcoming-link">See details →</a>`
+        const safeLink = ev.link ? normalizeEventLink(ev.link) : null;
+        const link = safeLink
+          ? `<a href="${escapeHtml(safeLink)}" target="_blank" rel="noopener" class="upcoming-link">See details →</a>`
           : '';
 
         const hasLongDesc = ev.description && ev.description.length > 120;
@@ -160,6 +161,16 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+// Only http(s) URLs from event data may become links. Blocks javascript:,
+// data:, vbscript: and anything else a compromised sheet could smuggle in.
+function normalizeEventLink(raw) {
+  try {
+    const url = new URL(String(raw));
+    if (url.protocol === 'http:' || url.protocol === 'https:') return url.href;
+  } catch (e) { /* malformed — fall through */ }
+  return null;
 }
 
 // ---- Testimonies slider (in-site YouTube playback) ----
@@ -243,9 +254,17 @@ function escapeHtml(str) {
         console.error('Refusing to embed invalid video id:', videoId);
         return;
       }
-      player.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + videoId +
-        '?autoplay=1&rel=0&playsinline=1" title="' + title +
-        '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+      // Build the iframe through DOM APIs only — no string interpolation into
+      // innerHTML, so neither videoId nor title can break out of the attribute.
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId +
+        '?autoplay=1&rel=0&playsinline=1';
+      iframe.title = title;
+      iframe.setAttribute('allow',
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', '');
+      player.textContent = '';
+      player.appendChild(iframe);
     });
   });
 

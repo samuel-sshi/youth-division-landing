@@ -16,6 +16,7 @@ import subprocess
 import sys
 from datetime import datetime, date
 from pathlib import Path
+from urllib.parse import urlparse
 
 # Auth helpers live in the google-workspace skill
 _SCRIPTS_DIR = str(Path.home() / ".hermes/skills/productivity/google-workspace/scripts")
@@ -153,13 +154,35 @@ def normalize_time(raw):
 
 
 def normalize_link(raw):
-    """Ensure link starts with http:// or https:// (blocks javascript: etc)."""
-    s = str(raw).strip()
+    """Validate an event link down to http(s) or reject it.
+
+    Blocks javascript:, data:, file:, etc. even if a sheet row is compromised.
+    Control/whitespace chars are stripped first — browsers ignore them inside
+    a URL scheme, so 'java\\tscript:alert(1)' must not smuggle a scheme past.
+    """
+    s = str(raw)
+    if re.search(r"[\x00-\x1f\x7f]", s):
+        s = re.sub(r"[\x00-\x1f\x7f]", "", s)
+    s = s.strip()
     if not s:
         return ""
-    if s.startswith(("http://", "https://")):
-        return s
-    return f"https://{s}"
+    # Explicit scheme gate, case-insensitive — urlparse alone would accept
+    # 'javascript:alert(1)' as scheme='javascript', netloc='alert(1)'.
+    if re.match(r"^https?://", s, re.IGNORECASE):
+        url = s
+    elif re.match(r"^[a-z][a-z0-9+.-]*:", s, re.IGNORECASE):
+        print(f"  ⚠️  dropping non-http(s) link: {raw!r}", file=sys.stderr)
+        return ""
+    else:
+        url = "https://" + s
+    try:
+        parsed = urlparse(url)
+    except ValueError:
+        return ""
+    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+        print(f"  ⚠️  dropping malformed link: {raw!r}", file=sys.stderr)
+        return ""
+    return parsed.geturl()
 
 
 def parse_rows(rows):

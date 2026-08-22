@@ -66,8 +66,8 @@ Google Sheets ──(hourly cron)──> sync_events.py ──> events.json ─�
 1. **`sync_events.py`** reads the sheet, filters `Published != FALSE`,
    normalizes dates/times, writes `events.json` (sorted ascending), and
    pushes to `gh-pages` if anything changed.
-2. **`sync_oneighty_events.sh`** is the cron wrapper — it invokes the
-   google-workspace venv Python.
+2. A cron wrapper invokes the sync script with the google-workspace
+   Python environment.
 3. **Cron job** (`ONEIGHTY Events Sync`) runs the script every hour.
 4. **`index.html`** fetches `events.json` client-side and renders only future
    events, so the page stays in sync automatically.
@@ -83,27 +83,25 @@ Google Sheets ──(hourly cron)──> sync_events.py ──> events.json ─�
 
 ### Running the sync manually
 
-```bash
-~/.hermes/venvs/google-workspace/bin/python ~/youth-division-landing/sync_events.py
-```
+The sync script is idempotent. Run it from the private copy that the
+cron job uses (it re-auths via the google-workspace venv and pushes to
+`gh-pages` only when `events.json` actually changed).
 
 ### Cron job
 
-```bash
-# List
-hermes cron list
-# It runs: ~/.hermes/scripts/sync_oneighty_events.sh  (every 60m)
-```
+An hourly cron job (`ONEIGHTY Events Sync`, `no_agent=true`) runs the
+private wrapper script — pure script, no model call. Check its status
+with `hermes cron list`.
 
 ### Dependencies
 
-- Google OAuth token at `~/.hermes/google_token.json` (scopes include
-  `spreadsheets`). Managed by the `google-workspace` skill.
-- Sheet ID stored at `~/.hermes/oneighty_sheet_id` (not in this public repo).
-- The live copies of `sync_events.py` / `setup_events_sheet.py` live in
-  `~/.hermes/scripts/` (private) — the copies in this repo are documentation
+- Google OAuth token with `spreadsheets` scope, managed by the
+  `google-workspace` skill. Stored privately outside this repo.
+- Sheet ID stored privately outside this repo (intentionally not
+  published here).
+- The live copies of `sync_events.py` / `setup_events_sheet.py` live
+  outside this repo (private) — the copies in this repo are documentation
   only and are NOT executed by the pipeline.
-- The cron job runs `no_agent=true`, so it needs no model call — pure script.
 
 ### Adding a new field to events
 
